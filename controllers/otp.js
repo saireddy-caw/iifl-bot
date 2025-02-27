@@ -1,8 +1,6 @@
 const otplist = require('../models/otplist');
 const jwt = require('jsonwebtoken');
-const accountSid = 'ACf20844b4dd07a3bf32d3f5ca77294125';
-const authToken = 'f170b72af16c6882e7f5d71800801d5b';
-const client = require('twilio')(accountSid, authToken);
+const client = require('twilio')(process.env.accountSid, process.env.authToken);
 
 
 
