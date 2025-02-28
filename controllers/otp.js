@@ -20,7 +20,7 @@ exports.sendOTP = async(req, res) => {
             }
 
             if(req.params.type == "staging"){
-                return res.status(400).send({ message: "message sent" });
+                return res.status(200).send({ message: "message sent" });
             }
 
             var myotp = Math.random().toString().substr(2, 6);
