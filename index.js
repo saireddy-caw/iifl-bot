@@ -69,3 +69,5 @@ app.get('/healthz', async (req, res) => {
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
   })
+
+  // "start": "pm2 start --no-daemon index.js",

@@ -11,17 +11,33 @@ exports.sendOTP = async(req, res) => {
             if(!req.body.phone){
                 return res.status(400).send({ message: "please enter phone" });
             }
+            if(!req.body.phone.length == 10){
+                return res.status(400).send({ message: "please enter valid phone number" });
+            }
+
+            if(!req.params.type){
+                return res.status(400).send({ message: "please provide type" });
+            }
+
+            if(req.params.type == "staging"){
+                return res.status(400).send({ message: "message sent" });
+            }
 
             var myotp = Math.random().toString().substr(2, 6);
 
-            
-client.messages
-    .create({
-        body: `${myotp} is your code`,
-        to: `+91${req.body.phone}`,
-        from: '+17623185826'
-    })
-    .then(message => console.log(message.sid));
+            try{
+                client.messages
+                .create({
+                    body: `${myotp} is your code`,
+                    to: `+91${req.body.phone}`,
+                    from: '+17623185826'
+                })
+                .then(message => console.log(message));
+            }catch(error) {
+                return res.status(400).json({ message: error });
+            }
+
+
 
         // const employees = await employeedetails.find();
 
