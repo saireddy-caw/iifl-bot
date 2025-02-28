@@ -15,11 +15,11 @@ exports.sendOTP = async(req, res) => {
                 return res.status(400).send({ message: "please enter valid phone number" });
             }
 
-            if(!req.params.type){
+            if(!req.query.type){
                 return res.status(400).send({ message: "please provide type" });
             }
 
-            if(req.params.type == "staging"){
+            if(req.query.type == "staging"){
                 return res.status(200).send({ message: "message sent" });
             }
 
@@ -37,14 +37,51 @@ exports.sendOTP = async(req, res) => {
                 return res.status(400).json({ message: error });
             }
 
-
-
-        // const employees = await employeedetails.find();
-
-        if (true) {
-            return res.status(200).json("Message sent");
-        }
+            const myotplog = await otplist({
+                otp: myotp,
+                phone: req.body.phone
+            })
+            await myotplog.save();
+            if (myotplog) {
+                return res.status(200).json(myotplog);
+            } else {
+                return res.status(400).json({ message: "Internal server error" })
+            }
     }catch (error) {
+        return res.status(400).json({ message: error });
+    }
+};
+
+
+//verify OTP
+exports.verifyOTP = async(req, res) => {
+    try {
+        if(!req.body.otp)
+        return res.status(400).json({ message: "otp required" })
+
+        if(!req.body.phone)
+            return res.status(400).json({ message: "phone required" })
+
+        if(!req.query.type){
+            return res.status(400).send({ message: "please provide type" });
+        }
+
+        if(req.query.type == "staging"){
+            return res.status(200).send({ message: "OTP Verified" });
+        }
+
+        const myotp = await otplist.find({phone:req.body.phone}).sort({date:-1}).limit(1);
+        console.log(myotp[0]["otp"])
+        console.log(req.body.otp)
+
+        if (myotp[0]["otp"] == req.body.otp) {
+            return res.status(200).json(myotp);
+        } else if(myotp[0]["otp"] != req.body.otp) {
+            return res.status(400).json({ message: "Incorrect OTP" })
+        }else{
+            return res.status(400).json({ message: "Something went wrong" })
+        }
+    } catch (error) {
         return res.status(400).json({ message: error });
     }
 };

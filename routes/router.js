@@ -18,6 +18,8 @@ const OTPController = require("../controllers/otp");
 
 // email verification & Login
 router.post("/sendOTP", OTPController.sendOTP)
+router.post("/verifyOTP", OTPController.verifyOTP)
+
 
 
 module.exports = router;
