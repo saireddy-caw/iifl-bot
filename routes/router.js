@@ -4,6 +4,7 @@ const verify = require("./verifytoken");
 
 
 const OTPController = require("../controllers/otp");
+const ServiceableAreaController = require("../controllers/serviceablearea");
 // const otplist = require('../models/otplist');
 // const usercontroller = require("../controllers/user");
 // const jobapplicationcontroller = require("../controllers/jobapplication");
@@ -16,10 +17,13 @@ const OTPController = require("../controllers/otp");
 // const earlyrequest_controller = require('../controllers/earlyrequest')
 
 
-// email verification & Login
+// OTP
 router.post("/sendOTP", OTPController.sendOTP)
 router.post("/verifyOTP", OTPController.verifyOTP)
 
+//Serviceable Area
+router.post("/addarea", ServiceableAreaController.addarea)
+router.get("/getarea", ServiceableAreaController.getArea)
 
 
 module.exports = router;
