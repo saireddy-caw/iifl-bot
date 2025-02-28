@@ -5,16 +5,7 @@ const verify = require("./verifytoken");
 
 const OTPController = require("../controllers/otp");
 const ServiceableAreaController = require("../controllers/serviceablearea");
-// const otplist = require('../models/otplist');
-// const usercontroller = require("../controllers/user");
-// const jobapplicationcontroller = require("../controllers/jobapplication");
-// const workhourscontroller = require("../controllers/workhours");
-// const leavecontroller = require("../controllers/leave");
-// const attendancecontroller = require("../controllers/attendance");
-// const compoffcontroller = require("../controllers/compoffreq");
-// const payslipcontroller = require("../controllers/payslip");
-// const teamcontroller = require('../controllers/team');
-// const earlyrequest_controller = require('../controllers/earlyrequest')
+const LeadController = require("../controllers/leads");
 
 
 // OTP
@@ -24,6 +15,11 @@ router.post("/verifyOTP", OTPController.verifyOTP)
 //Serviceable Area
 router.post("/addarea", ServiceableAreaController.addarea)
 router.get("/getarea", ServiceableAreaController.getArea)
+
+//Lead status
+router.post("/createlead", LeadController.createlead)
+router.delete("/deletelead", LeadController.deleteLead)
+
 
 
 module.exports = router;
