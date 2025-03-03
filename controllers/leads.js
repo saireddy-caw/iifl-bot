@@ -8,8 +8,17 @@ exports.createlead = async(req, res) => {
             }
 
             const checkLead = await Lead.findOne({phone:req.body.phone});
-            if(checkLead)
-                return res.status(400).send({ message: "Lead Already exists" });
+            if(checkLead){
+                var updatelead = await Lead.updateOne({ "phone": req.body.phone}, // Filter
+                    {$set: {"date": Date.now()}}, {upsert: true});
+                if (updatelead) {
+                    return res.status(200).json(updatelead);
+                } else {
+                    return res.status(400).json({ message: "Internal server error" })
+                }
+            }
+                
+                
 
             var randomnumber = Math.random().toString().substr(2, 6);
 
