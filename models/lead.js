@@ -5,11 +5,31 @@ const schema = mongoose.Schema({
     leadid: Number,
     name: {
         type: String,
-        require: true
+        require: false
     },
     phone: {
         type: Number,
         require: true
+    },
+    location: {
+        type: String,
+        required: false
+    },
+    loanamount: {
+        type: String,
+        required: false
+    },
+    aadharcard: {
+        type: String,
+        required: false
+    },
+    pancard: {
+        type: String,
+        required: false
+    },
+    livephoto: {
+        type: String,
+        required: false
     },
     status: {
         type: String,

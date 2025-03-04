@@ -17,14 +17,21 @@ exports.createlead = async(req, res) => {
                     return res.status(400).json({ message: "Internal server error" })
                 }
             }
-                
-                
 
+            var tempuser = "";
             var randomnumber = Math.random().toString().substr(2, 6);
 
+            if(req.body.name){
+                tempuser = req.body.name
+            }else{
+                tempuser = "user"+randomnumber
+            }
+             
             const mylead = await Lead({
                 phone: req.body.phone,
-                name: "user"+randomnumber,
+                name: tempuser,
+                location: req.body.location,
+                loanamount: req.body.loanamount,
                 status: "WIP1"
             })
             await mylead.save();
@@ -61,7 +68,7 @@ exports.updateLead = async(req, res) => {
         const checkLead = await Lead.findOne({phone:req.body.phone});
 if(checkLead){
     var updatelead = await Lead.updateOne({ "phone": req.body.phone}, // Filter
-        {$set: {"status": req.body.status}}, {upsert: true});
+        {$set: {"status": req.body.status, "aadharcard": req.body.aadharcard, "pancard": req.body.pancard, "livephoto": req.body.livephoto}}, {upsert: true});
     if (updatelead) {
         return res.status(200).json(updatelead);
     } else {
