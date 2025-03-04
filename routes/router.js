@@ -20,6 +20,7 @@ router.get("/getarea", ServiceableAreaController.getArea)
 //Lead status
 router.post("/createlead", LeadController.createlead)
 router.delete("/deletelead", LeadController.deleteLead)
+router.post("/updatelead", LeadController.updateLead)
 
 //Aadhar upload
 router.post("/uploadaadhar", uploadController.uploadaadhar)

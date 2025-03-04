@@ -55,3 +55,22 @@ exports.deleteLead = async(req, res) => {
         return res.status(400).json({ message: error });
     }
 };
+
+exports.updateLead = async(req, res) => {
+    try {
+        const checkLead = await Lead.findOne({phone:req.body.phone});
+if(checkLead){
+    var updatelead = await Lead.updateOne({ "phone": req.body.phone}, // Filter
+        {$set: {"status": req.body.status}}, {upsert: true});
+    if (updatelead) {
+        return res.status(200).json(updatelead);
+    } else {
+        return res.status(400).json({ message: "Internal server error" })
+    }
+}
+    }
+    catch (error) {
+        return res.status(400).json({ message: error });
+    }
+}
+
