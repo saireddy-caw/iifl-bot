@@ -80,7 +80,7 @@ exports.verifyOTP = async(req, res) => {
             if(mylead)
                 return res.status(201).json(mylead);
             else
-                return res.status(200).json(myotp);
+                return res.status(200).json(myotp[0]);
         } else if(myotp[0]["otp"] != req.body.otp) {
             return res.status(400).json({ message: "Incorrect OTP" })
         }else{
