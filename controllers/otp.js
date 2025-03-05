@@ -1,4 +1,5 @@
 const otplist = require('../models/otplist');
+const Leads = require('../models/lead');
 const jwt = require('jsonwebtoken');
 const client = require('twilio')(process.env.accountSid, process.env.authToken);
 
@@ -52,7 +53,6 @@ exports.sendOTP = async(req, res) => {
     }
 };
 
-
 //verify OTP
 exports.verifyOTP = async(req, res) => {
     try {
@@ -75,7 +75,12 @@ exports.verifyOTP = async(req, res) => {
         console.log(req.body.otp)
 
         if (myotp[0]["otp"] == req.body.otp) {
-            return res.status(200).json(myotp);
+
+            const mylead = await Leads.findOne({ phone: req.body.phone })
+            if(mylead)
+                return res.status(201).json(mylead);
+            else
+                return res.status(200).json(myotp);
         } else if(myotp[0]["otp"] != req.body.otp) {
             return res.status(400).json({ message: "Incorrect OTP" })
         }else{
